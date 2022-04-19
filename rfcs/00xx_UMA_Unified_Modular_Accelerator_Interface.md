@@ -342,3 +342,8 @@ Below is a list of currently planned configuration parameters for the initial ve
 |Parameter|Type|Description|
 |---------|----|-----------|
 |merge_compiler_regions|bool (default: True)|Enables/disables the `MergeCompilerRegions` pass during partitioning.|
+
+
+# Future possibilities
+Possible future topics are:
+ - adding ``register_schedules()``
