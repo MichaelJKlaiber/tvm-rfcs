@@ -9,7 +9,7 @@
 	  Johannes Partzsch - TU Dresden
 	  Andrew Stevens - Infineon Technologies
     RFC PR: TBD
-    GitHub Issue: TBD
+    GitHub Tracking Issue: https://github.com/apache/tvm/issues/11260
 
 ## Summary
 
