@@ -301,6 +301,7 @@ class MyPassA:
         return func
 ```
 
+
 #### `_register_codegen`
 ```python
 _register_codegen(self, fmt: str = "c", **kwargs) -> None
@@ -328,6 +329,51 @@ def gen_includes() -> str:
 def gen_replace_call_extern(args: tvm.ir.container.Array) -> str:
     return "my_custom_api_function({}, {}, {})".format(*args)
 ```
+
+#### External code generation
+
+When using `_register_codegen` the generated code is stored in the MLF file structure in **default_libX.c**.
+A number of usecase, however, require additions files to be generated that are based on the information from
+inside IRModule, but are stored in a separate file inside the MLF structure.
+
+Reason can be e.g. the generation of:
+
+ * Library wrappers
+ 
+ * Glue logic between a non-TVM run-time and the output of TVM codegen
+
+ * Test/Verification code
+
+To account for this, **UMA** provides the `.register_external_file()` handle. This give the pass
+developer the possibility to generate target code from inside of a TIR pass.
+
+Example:
+
+```python
+        ExternalTirGen():
+            self._dfa_model_file = UMABackend.register_external_file("external_file0.h")
+            self._dfa_model_file.write("#include ....")
+            ...
+            self._dfa_model_file = UMABackend.register_external_file("external_file0.c")
+            self._dfa_model_file.write("#include <my_env> \n //Some (c) code evaluated by target framework")
+
+```
+The pass `ExternalTirGen` generates the files **external_file0.h** and **external_file0.c**
+
+```
+.
+├── codegen
+│   └── host
+│       └── src
+│           ├── default_lib0.c
+│           ├── ...
+│           ├── external_file0.h
+│           └── external_file0.c
+├── ...
+└── src
+
+```
+
 
 #### Configuration
 
