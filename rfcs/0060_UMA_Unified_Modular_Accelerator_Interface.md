@@ -351,11 +351,11 @@ Example:
 
 ```python
         ExternalTirGen():
-            self._dfa_model_file = UMABackend.register_external_file("external_file0.h")
-            self._dfa_model_file.write("#include ....")
+            self._external_file0 = UMABackend.register_external_file("external_file0.h")
+            self._external_file0.write("#include ....")
             ...
-            self._dfa_model_file = UMABackend.register_external_file("external_file0.c")
-            self._dfa_model_file.write("#include <my_env> \n //Some (c) code evaluated by target framework")
+            self._external_file1 = UMABackend.register_external_file("external_file0.c")
+            self._external_file1.write("#include <my_env> \n //Some (c) code evaluated by target framework")
 
 ```
 The pass `ExternalTirGen` generates the files **external_file0.h** and **external_file0.c**
